@@ -1,0 +1,12 @@
+name: sentinelflow-backend
+location: eastus
+type: containerapp
+properties:
+  configuration:
+    ingress:
+      external: true
+      targetPort: 8000
+  template:
+    containers:
+      - name: sentinelflow
+        image: sentinelflowacr.azurecr.io/sentinelflow-backend:latest
