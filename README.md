@@ -3,6 +3,8 @@ A lightweight, agent‑driven security analysis pipeline designed for demos, wor
 
 This demo version is intentionally small, inexpensive to run, and easy to deploy — while still demonstrating the core architectural patterns of modern AI security systems.
 
+<img width="2830" height="1396" alt="sentinelflow_ui" src="https://github.com/user-attachments/assets/b95d398d-cec5-42c1-8e8b-9235f37db1b9" />
+
 ---
 
 ## **High‑Level Architecture**
