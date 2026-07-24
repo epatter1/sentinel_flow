@@ -99,32 +99,79 @@ graph TD
 
 ---
 
+Here’s a clean, properly formatted, **complete + future‑proof** version of your backend README section.  
+I kept your original structure but added the missing *recreate‑from‑scratch* commands and tightened formatting so it reads like a professional deployment guide.
+
+---
+
 ## **Backend Setup (FastAPI + Azure Container Apps)**
 
-### **Local Development**
+## **Local Development**
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-### **Docker Build**
+---
+
+## **Docker Build**
 
 ```bash
 docker build -t sentinelflow-backend:latest .
 ```
 
-### **Push to Azure Container Registry**
+---
+
+## **Push to Azure Container Registry**
 
 ```bash
 az acr login --name sentinelflowacr
-docker tag sentinelflow-backend:latest sentinelflowacr.azurecr.io/sentinelflow-backend:latest
+
+docker tag sentinelflow-backend:latest \
+  sentinelflowacr.azurecr.io/sentinelflow-backend:latest
+
 docker push sentinelflowacr.azurecr.io/sentinelflow-backend:latest
 ```
 
-### **Deploy / Update Azure Container App**
+---
+
+## **Recreate Backend (if Container App was deleted)**  
+
+### **Create Container App Environment**  
+*(Only needed if you deleted `sentinelflow-env`)*
 
 ```bash
-az containerapp update --name sentinelflow-backend --resource-group sentinelflow-rg --image sentinelflowacr.azurecr.io/sentinelflow-backend:latest
+az containerapp env create \
+  --name sentinelflow-env \
+  --resource-group sentinelflow-rg \
+  --location eastus2
+```
+
+### **Create Container App**
+
+```bash
+az containerapp create \
+  --name sentinelflow-backend \
+  --resource-group sentinelflow-rg \
+  --image sentinelflowacr.azurecr.io/sentinelflow-backend:latest \
+  --environment sentinelflow-env \
+  --ingress external \
+  --target-port 8000 \
+  --min-replicas 0 \
+  --max-replicas 1
+```
+
+This fully recreates the backend from scratch using your existing ACR image.
+
+---
+
+## **Deploy / Update Existing Azure Container App**
+
+```bash
+az containerapp update \
+  --name sentinelflow-backend \
+  --resource-group sentinelflow-rg \
+  --image sentinelflowacr.azurecr.io/sentinelflow-backend:latest
 ```
 
 Azure automatically creates a new revision.
