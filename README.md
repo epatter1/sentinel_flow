@@ -99,11 +99,6 @@ graph TD
 
 ---
 
-Here’s a clean, properly formatted, **complete + future‑proof** version of your backend README section.  
-I kept your original structure but added the missing *recreate‑from‑scratch* commands and tightened formatting so it reads like a professional deployment guide.
-
----
-
 ## **Backend Setup (FastAPI + Azure Container Apps)**
 
 ## **Local Development**
